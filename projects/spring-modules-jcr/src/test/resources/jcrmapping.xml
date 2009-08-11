@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE jackrabbit-ocm PUBLIC "-//The Apache Software Foundation//DTD Repository//EN" "./src/test/resources/jackrabbit-ocm.dtd">
+<jackrabbit-ocm>
+	<class-descriptor className="org.springmodules.jcr.jackrabbit.ocm.test.model.News" discriminator="true">
+		<field-descriptor fieldName="path" path="true" />
+		<field-descriptor fieldName="creationDate" jcrName="creationDate" />
+		<field-descriptor fieldName="content" jcrName="content" />
+	</class-descriptor>
+
+	<class-descriptor className="org.springmodules.jcr.jackrabbit.ocm.test.model.Article" discriminator="true">		
+		<field-descriptor fieldName="path" path="true" />
+		<field-descriptor fieldName="title" jcrName="title" />
+		<field-descriptor fieldName="description" jcrName="description" />		
+		<field-descriptor fieldName="author" jcrName="author" />
+		<field-descriptor fieldName="creationDate" jcrName="creationDate" />
+		<field-descriptor fieldName="content" jcrName="content" />						
+	</class-descriptor>
+
+</jackrabbit-ocm>
+ 

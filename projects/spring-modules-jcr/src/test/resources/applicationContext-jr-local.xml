@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!--
+	Local transaction manager only for JackRabbit
+	    
+    $Id: applicationContext-jr-local.xml,v 1.1 2005/10/10 09:20:42 costin Exp $
+    -->    
+	<bean id="jcrTransactionManager"
+		class="org.springmodules.jcr.jackrabbit.LocalTransactionManager">
+		<property name="sessionFactory" ref="jcrSessionFactory"/>
+	</bean>
+	
+	<bean id="repository" class="org.springmodules.jcr.jackrabbit.RepositoryFactoryBean">
+		<!-- normal factory beans params -->
+		<property name="configuration" value="file:./src/test/resources/repository-xml.xml"/>
+		<property name="homeDir" value="file:./target/repository"/>				
+
+	</bean>
+</beans>

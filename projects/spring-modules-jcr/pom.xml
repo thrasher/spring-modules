@@ -22,38 +22,70 @@
 			<artifactId>jcr</artifactId>
 			<version>${jcr.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>geronimo-spec</groupId>
+			<artifactId>geronimo-spec-jta</artifactId>
+			<version>1.0.1B-rc4</version>
+		</dependency>
 		<dependency>
 			<groupId>xerces</groupId>
 			<artifactId>xercesImpl</artifactId>
-			<version>2.8.1</version>
-			<scope>provided</scope>
+			<version>2.9.1</version>
 		</dependency>
 
+		<!-- provided, user must use EITHER Jeceira or Jackrabbit -->
+		<dependency>
+			<groupId>org.apache.jackrabbit</groupId>
+			<artifactId>jackrabbit-api</artifactId>
+			<version>${jackrabbit.version}</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.jackrabbit</groupId>
 			<artifactId>jackrabbit-core</artifactId>
 			<version>${jackrabbit.version}</version>
+			<scope>provided</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>org.apache.jackrabbit</groupId>
+			<artifactId>jackrabbit-jcr-commons</artifactId>
+			<version>${jackrabbit.version}</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.jackrabbit</groupId>
 			<artifactId>jackrabbit-jcr-rmi</artifactId>
 			<version>${jackrabbit.version}</version>
+			<scope>provided</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>org.apache.jackrabbit</groupId>
+			<artifactId>jackrabbit-jca</artifactId>
+			<version>${jackrabbit.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.jackrabbit</groupId>
+			<artifactId>jackrabbit-ocm</artifactId>
+			<version>${jackrabbit.version}</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>net.sf.jeceira</groupId>
 			<artifactId>jeceira</artifactId>
 			<version>0.1.4</version>
+			<scope>provided</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>javax.transaction</groupId>
-			<artifactId>jta</artifactId>
-			<version>1.1</version>
-		</dependency>
-
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
@@ -61,15 +93,11 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- Test -->
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>${version.spring}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${version.spring}</version>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -78,10 +106,24 @@
 			<version>1.0.3</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>easymock</groupId>
+			<artifactId>easymockclassextension</artifactId>
+			<version>1.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>geronimo-spec</groupId>
+			<artifactId>geronimo-spec-j2ee-connector</artifactId>
+			<version>1.5-rc4</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 	<properties>
 		<jcr.version>1.0</jcr.version>
 		<jackrabbit.version>1.5.0</jackrabbit.version>
+		<spring.version>${version.spring}</spring.version>
 	</properties>
 </project>
