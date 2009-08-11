@@ -89,13 +89,24 @@ public class LocalTransactionManager extends AbstractPlatformTransactionManager
 		JcrTransactionObject txObject = new JcrTransactionObject();
 
 		if (TransactionSynchronizationManager.hasResource(getSessionFactory())) {
-			UserTxSessionHolder sessionHolder = (UserTxSessionHolder) TransactionSynchronizationManager
+			// if the thread already has a transaction handler associated with
+			// it, let's not assume it's a UserTxSessionHolder
+			// TODO: validate this will work for cross-resource transactions
+			Object resource = TransactionSynchronizationManager
 					.getResource(getSessionFactory());
-			if (logger.isDebugEnabled()) {
-				logger.debug("Found thread-bound session ["
-						+ sessionHolder.getSession() + "] for JCR transaction");
+			if (resource instanceof UserTxSessionHolder) {
+				UserTxSessionHolder sessionHolder = (UserTxSessionHolder) resource;
+				if (logger.isDebugEnabled()) {
+					logger.debug("Found thread-bound session ["
+							+ sessionHolder.getSession()
+							+ "] for JCR transaction");
+				}
+				txObject.setSessionHolder(sessionHolder, false);
+			} else {
+				logger
+						.warn("transaction is not using a UserTxSessionHolder, it's a "
+								+ resource.getClass());
 			}
-			txObject.setSessionHolder(sessionHolder, false);
 		}
 
 		return txObject;
