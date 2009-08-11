@@ -12,14 +12,15 @@ import org.springmodules.jcr.SessionHolder;
 import org.springmodules.jcr.SessionHolderProvider;
 
 /**
- * Generic implementation of org.springmodules.jcr.SessionHolderProvider w/o any transaction support.
+ * Generic implementation of org.springmodules.jcr.SessionHolderProvider w/o any
+ * transaction support.
  * 
  * @author Costin Leau
- *
+ * 
  */
 public class GenericSessionHolderProvider implements SessionHolderProvider {
 
-    /**
+	/**
 	 * @see org.springmodules.jcr.SessionHolderProvider#acceptsRepository(java.lang.String)
 	 */
 	public boolean acceptsRepository(String repositoryName) {
@@ -27,10 +28,10 @@ public class GenericSessionHolderProvider implements SessionHolderProvider {
 	}
 
 	/**
-     * @see org.springmodules.jcr.SessionHolderProvider#createSessionHolder(javax.jcr.Session)
-     */
-    public SessionHolder createSessionHolder(Session session) {
-        return new SessionHolder(session);
-    }
+	 * @see org.springmodules.jcr.SessionHolderProvider#createSessionHolder(javax.jcr.Session)
+	 */
+	public SessionHolder createSessionHolder(Session session) {
+		return new SessionHolder(session);
+	}
 
 }

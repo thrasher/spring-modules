@@ -21,8 +21,8 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
  * 
  * <p>
  * Application code must retrieve a JCR Session via the
- * <code>JcrSessionFactoryUtils.getSession</code> method, to be able to detect
- * a thread-bound Jcr Session. It is preferable to use <code>getSession</code>
+ * <code>JcrSessionFactoryUtils.getSession</code> method, to be able to detect a
+ * thread-bound Jcr Session. It is preferable to use <code>getSession</code>
  * with allowCreate=false, if the code relies on the interceptor to provide
  * proper session handling. Typically, the code will look as follows:
  * 
@@ -66,27 +66,32 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
  */
 public class JcrInterceptor extends JcrAccessor implements MethodInterceptor {
 
-    public Object invoke(MethodInvocation methodInvocation) throws Throwable {
-        boolean existingTransaction = false;
-        Session session = SessionFactoryUtils.getSession(getSessionFactory(), true);
-        if (TransactionSynchronizationManager.hasResource(getSessionFactory())) {
-            logger.debug("Found thread-bound Session for JCR interceptor");
-            existingTransaction = true;
-        } else {
-            logger.debug("Using new Session for JCR interceptor");
-            TransactionSynchronizationManager.bindResource(getSessionFactory(), getSessionFactory().getSessionHolder(session));
-        }
-        try {
-            Object retVal = methodInvocation.proceed();
-            // flushIfNecessary(session, existingTransaction);
-            return retVal;
-        } finally {
-            if (existingTransaction) {
-                logger.debug("Not closing pre-bound JCR Session after interceptor");
-            } else {
-                TransactionSynchronizationManager.unbindResource(getSessionFactory());
-                SessionFactoryUtils.releaseSession(session, getSessionFactory());
-            }
-        }
-    }
+	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
+		boolean existingTransaction = false;
+		Session session = SessionFactoryUtils.getSession(getSessionFactory(),
+				true);
+		if (TransactionSynchronizationManager.hasResource(getSessionFactory())) {
+			logger.debug("Found thread-bound Session for JCR interceptor");
+			existingTransaction = true;
+		} else {
+			logger.debug("Using new Session for JCR interceptor");
+			TransactionSynchronizationManager.bindResource(getSessionFactory(),
+					getSessionFactory().getSessionHolder(session));
+		}
+		try {
+			Object retVal = methodInvocation.proceed();
+			// flushIfNecessary(session, existingTransaction);
+			return retVal;
+		} finally {
+			if (existingTransaction) {
+				logger
+						.debug("Not closing pre-bound JCR Session after interceptor");
+			} else {
+				TransactionSynchronizationManager
+						.unbindResource(getSessionFactory());
+				SessionFactoryUtils
+						.releaseSession(session, getSessionFactory());
+			}
+		}
+	}
 }

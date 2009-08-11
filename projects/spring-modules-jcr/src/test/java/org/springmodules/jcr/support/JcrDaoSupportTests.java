@@ -45,8 +45,7 @@ public class JcrDaoSupportTests extends TestCase {
 			sessCtrl.verify();
 			sfCtrl.verify();
 			repositoryCtrl.verify();
-		}
-		catch (IllegalStateException ex) {
+		} catch (IllegalStateException ex) {
 			// ignore: test method didn't call replay
 		}
 	}
@@ -54,10 +53,11 @@ public class JcrDaoSupportTests extends TestCase {
 	public void testJcrDaoSupportWithSessionFactory() throws Exception {
 
 		// used for ServiceProvider
-/*
-		sessCtrl.expectAndReturn(sess.getRepository(), repository, MockControl.ONE_OR_MORE);
-		sfCtrl.expectAndReturn(sf.getSession(), sess);
-*/		sfCtrl.replay();
+		/*
+		 * sessCtrl.expectAndReturn(sess.getRepository(), repository,
+		 * MockControl.ONE_OR_MORE); sfCtrl.expectAndReturn(sf.getSession(),
+		 * sess);
+		 */sfCtrl.replay();
 		sessCtrl.replay();
 
 		JcrDaoSupport dao = new JcrDaoSupport() {
@@ -68,7 +68,8 @@ public class JcrDaoSupportTests extends TestCase {
 		dao.setSessionFactory(sf);
 		dao.afterPropertiesSet();
 		assertEquals("Correct SessionFactory", sf, dao.getSessionFactory());
-		//assertEquals("Correct JcrTemplate", sf, dao.getJcrTemplate().getSessionFactory());
+		// assertEquals("Correct JcrTemplate", sf,
+		// dao.getJcrTemplate().getSessionFactory());
 		sfCtrl.verify();
 	}
 
@@ -92,15 +93,15 @@ public class JcrDaoSupportTests extends TestCase {
 		try {
 			dao.afterPropertiesSet();
 			fail("expected exception");
-		}
-		catch (IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			//
 		}
 	}
 
 	public void testSetSessionFactory() throws RepositoryException {
-		//sessCtrl.expectAndReturn(sess.getRepository(), repository, MockControl.ONE_OR_MORE);
-		//sfCtrl.expectAndReturn(sf.getSession(), sess);
+		// sessCtrl.expectAndReturn(sess.getRepository(), repository,
+		// MockControl.ONE_OR_MORE);
+		// sfCtrl.expectAndReturn(sf.getSession(), sess);
 		sfCtrl.replay();
 		sessCtrl.replay();
 
@@ -108,7 +109,7 @@ public class JcrDaoSupportTests extends TestCase {
 		};
 
 		dao.setSessionFactory(sf);
-		
+
 		assertEquals(dao.getSessionFactory(), sf);
 	}
 
@@ -126,21 +127,20 @@ public class JcrDaoSupportTests extends TestCase {
 		try {
 			dao.getSession();
 			fail("expected exception");
-		}
-		catch (IllegalStateException e) {
-			// it's okay 
+		} catch (IllegalStateException e) {
+			// it's okay
 		}
 		assertEquals(dao.getSession(true), sess);
 	}
 
-	public void testReleaseSession(){
+	public void testReleaseSession() {
 		JcrDaoSupport dao = new JcrDaoSupport() {
 		};
 
 		dao.releaseSession(null);
 
 		sess.logout();
-		
+
 		sfCtrl.replay();
 		sessCtrl.replay();
 

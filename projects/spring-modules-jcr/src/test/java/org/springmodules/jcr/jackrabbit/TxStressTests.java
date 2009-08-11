@@ -43,14 +43,16 @@ public class TxStressTests extends AbstractTransactionalSpringContextTests {
 			startNewTransaction();
 			template.execute(new JcrCallback() {
 
-				public Object doInJcr(Session session) throws IOException, RepositoryException {
+				public Object doInJcr(Session session) throws IOException,
+						RepositoryException {
 					Node rootNode = session.getRootNode();
 					Node one = rootNode.addNode("bla-bla-bla");
 					one.setProperty("some prop", false);
 					Node two = one.addNode("foo");
 					two.setProperty("boo", "hoo");
 					Node three = two.addNode("bar");
-					three.setProperty("whitehorse", new String[] { "super", "ultra", "mega" });
+					three.setProperty("whitehorse", new String[] { "super",
+							"ultra", "mega" });
 					session.save();
 					return null;
 				}

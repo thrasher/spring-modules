@@ -46,11 +46,14 @@ public class JcrNamespaceHandler extends NamespaceHandlerSupport {
 	public void init() {
 		// registerBeanDefinitionParser("repository", new
 		// JcrBeanDefinitionParser());
-		registerBeanDefinitionParser("eventListenerDefinition", new JcrEventListenerBeanDefinitionParser());
-		registerBeanDefinitionParser("sessionFactory", new JcrSessionFactoryBeanDefinitionParser());
+		registerBeanDefinitionParser("eventListenerDefinition",
+				new JcrEventListenerBeanDefinitionParser());
+		registerBeanDefinitionParser("sessionFactory",
+				new JcrSessionFactoryBeanDefinitionParser());
 	}
 
-	private class JcrEventListenerBeanDefinitionParser extends AbstractSimpleBeanDefinitionParser {
+	private class JcrEventListenerBeanDefinitionParser extends
+			AbstractSimpleBeanDefinitionParser {
 		public static final String EVENT_TYPE = "eventType";
 
 		public static final String NODE_TYPE_NAME = "nodeTypeName";
@@ -60,7 +63,9 @@ public class JcrNamespaceHandler extends NamespaceHandlerSupport {
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser#getBeanClass(org.w3c.dom.Element)
+		 * @see
+		 * org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser
+		 * #getBeanClass(org.w3c.dom.Element)
 		 */
 		protected Class getBeanClass(Element element) {
 			return EventListenerDefinition.class;
@@ -69,28 +74,36 @@ public class JcrNamespaceHandler extends NamespaceHandlerSupport {
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see org.springframework.beans.factory.xml.AbstractSimpleBeanDefinitionParser#postProcess(org.springframework.beans.factory.support.BeanDefinitionBuilder,
-		 *      org.w3c.dom.Element)
+		 * @see
+		 * org.springframework.beans.factory.xml.AbstractSimpleBeanDefinitionParser
+		 * #postProcess(org.springframework.beans.factory.support.
+		 * BeanDefinitionBuilder, org.w3c.dom.Element)
 		 */
-		protected void postProcess(BeanDefinitionBuilder definitionBuilder, Element element) {
+		protected void postProcess(BeanDefinitionBuilder definitionBuilder,
+				Element element) {
 			NodeList childNodes = element.getChildNodes();
-			List eventTypes = DomUtils.getChildElementsByTagName(element, EVENT_TYPE);
+			List eventTypes = DomUtils.getChildElementsByTagName(element,
+					EVENT_TYPE);
 			if (eventTypes != null && eventTypes.size() > 0) {
 				// compute event type
 				int eventType = 0;
 				Constants types = new Constants(Event.class);
 				for (Iterator iter = eventTypes.iterator(); iter.hasNext();) {
 					Element evenTypeElement = (Element) iter.next();
-					eventType |= types.asNumber(DomUtils.getTextValue(evenTypeElement)).intValue();
+					eventType |= types.asNumber(
+							DomUtils.getTextValue(evenTypeElement)).intValue();
 				}
-				definitionBuilder.addPropertyValue(EVENT_TYPE, new Integer(eventType));
+				definitionBuilder.addPropertyValue(EVENT_TYPE, new Integer(
+						eventType));
 			}
 
-			List nodeTypeNames = DomUtils.getChildElementsByTagName(element, NODE_TYPE_NAME);
+			List nodeTypeNames = DomUtils.getChildElementsByTagName(element,
+					NODE_TYPE_NAME);
 			String[] nodeTypeValues = new String[nodeTypeNames.size()];
 
 			for (int i = 0; i < nodeTypeValues.length; i++) {
-				nodeTypeValues[i] = DomUtils.getTextValue((Element) nodeTypeNames.get(i));
+				nodeTypeValues[i] = DomUtils
+						.getTextValue((Element) nodeTypeNames.get(i));
 			}
 			definitionBuilder.addPropertyValue(NODE_TYPE_NAME, nodeTypeValues);
 			List uuids = DomUtils.getChildElementsByTagName(element, UUID);
@@ -105,11 +118,14 @@ public class JcrNamespaceHandler extends NamespaceHandlerSupport {
 		}
 	}
 
-	private class JcrSessionFactoryBeanDefinitionParser extends AbstractSimpleBeanDefinitionParser {
+	private class JcrSessionFactoryBeanDefinitionParser extends
+			AbstractSimpleBeanDefinitionParser {
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser#getBeanClass(org.w3c.dom.Element)
+		 * @see
+		 * org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser
+		 * #getBeanClass(org.w3c.dom.Element)
 		 */
 		protected Class getBeanClass(Element element) {
 			return JcrSessionFactory.class;

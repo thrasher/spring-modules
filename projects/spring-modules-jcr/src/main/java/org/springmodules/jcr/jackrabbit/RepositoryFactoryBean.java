@@ -27,7 +27,8 @@ import org.xml.sax.InputSource;
  * @author Costin Leau
  * 
  */
-public class RepositoryFactoryBean extends org.springmodules.jcr.RepositoryFactoryBean {
+public class RepositoryFactoryBean extends
+		org.springmodules.jcr.RepositoryFactoryBean {
 
 	/**
 	 * Default repository configuration file.
@@ -67,18 +68,23 @@ public class RepositoryFactoryBean extends org.springmodules.jcr.RepositoryFacto
 
 		if (this.configuration == null) {
 			if (log.isDebugEnabled())
-				log.debug("no configuration resource specified, using the default one:" + DEFAULT_CONF_FILE);
+				log
+						.debug("no configuration resource specified, using the default one:"
+								+ DEFAULT_CONF_FILE);
 			configuration = new ClassPathResource(DEFAULT_CONF_FILE);
 		}
 
 		if (homeDir == null) {
 			if (log.isDebugEnabled())
-				log.debug("no repository home dir specified, using the default one:" + DEFAULT_REP_DIR);
+				log
+						.debug("no repository home dir specified, using the default one:"
+								+ DEFAULT_REP_DIR);
 			homeDir = new FileSystemResource(DEFAULT_REP_DIR);
 		}
 
-		repositoryConfig = RepositoryConfig.create(new InputSource(configuration.getInputStream()),
-				homeDir.getFile().getAbsolutePath());
+		repositoryConfig = RepositoryConfig.create(new InputSource(
+				configuration.getInputStream()), homeDir.getFile()
+				.getAbsolutePath());
 	}
 
 	/**
@@ -99,7 +105,8 @@ public class RepositoryFactoryBean extends org.springmodules.jcr.RepositoryFacto
 	}
 
 	/**
-	 * @param defaultRepDir The defaultRepDir to set.
+	 * @param defaultRepDir
+	 *            The defaultRepDir to set.
 	 */
 	public void setHomeDir(Resource defaultRepDir) {
 		this.homeDir = defaultRepDir;
@@ -113,7 +120,8 @@ public class RepositoryFactoryBean extends org.springmodules.jcr.RepositoryFacto
 	}
 
 	/**
-	 * @param repositoryConfig The repositryConfig to set.
+	 * @param repositoryConfig
+	 *            The repositryConfig to set.
 	 */
 	public void setRepositoryConfig(RepositoryConfig repositoryConfig) {
 		this.repositoryConfig = repositoryConfig;

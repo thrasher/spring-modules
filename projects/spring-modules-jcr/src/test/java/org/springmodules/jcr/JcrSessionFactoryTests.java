@@ -38,8 +38,7 @@ public class JcrSessionFactoryTests extends TestCase {
 
 		try {
 			repoCtrl.verify();
-		}
-		catch (IllegalStateException ex) {
+		} catch (IllegalStateException ex) {
 			// ignore: test method didn't call replay
 		}
 
@@ -55,8 +54,7 @@ public class JcrSessionFactoryTests extends TestCase {
 		try {
 			repoCtrl.expectAndReturn(repo.login(null, null), null);
 			factory.getSession();
-		}
-		catch (RepositoryException e) {
+		} catch (RepositoryException e) {
 			e.printStackTrace();
 		}
 	}
@@ -70,8 +68,7 @@ public class JcrSessionFactoryTests extends TestCase {
 			factory.setRepository(null);
 			factory.afterPropertiesSet();
 			fail("expected exception (session factory badly initialized");
-		}
-		catch (IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 		}
 	}
 
@@ -108,7 +105,8 @@ public class JcrSessionFactoryTests extends TestCase {
 		EventListenerDefinition def1 = new EventListenerDefinition();
 		EventListenerDefinition def2 = new EventListenerDefinition();
 
-		EventListenerDefinition listeners[] = new EventListenerDefinition[] { def1, def2 };
+		EventListenerDefinition listeners[] = new EventListenerDefinition[] {
+				def1, def2 };
 		factory.setEventListeners(listeners);
 
 		MockControl sessionCtrl = MockControl.createControl(Session.class);
@@ -117,7 +115,8 @@ public class JcrSessionFactoryTests extends TestCase {
 		MockControl wsCtrl = MockControl.createControl(Workspace.class);
 		Workspace ws = (Workspace) wsCtrl.getMock();
 
-		MockControl omCtrl = MockControl.createControl(ObservationManager.class);
+		MockControl omCtrl = MockControl
+				.createControl(ObservationManager.class);
 		ObservationManager oManager = (ObservationManager) omCtrl.getMock();
 
 		repoCtrl.expectAndReturn(repo.login(null, null), session);
@@ -125,10 +124,12 @@ public class JcrSessionFactoryTests extends TestCase {
 
 		wsCtrl.expectAndReturn(ws.getObservationManager(), oManager);
 
-		oManager.addEventListener(def1.getListener(), def1.getEventTypes(), def1.getAbsPath(), def1.isDeep(), def1
-				.getUuid(), def1.getNodeTypeName(), def1.isNoLocal());
-		oManager.addEventListener(def2.getListener(), def2.getEventTypes(), def2.getAbsPath(), def2.isDeep(), def2
-				.getUuid(), def2.getNodeTypeName(), def2.isNoLocal());
+		oManager.addEventListener(def1.getListener(), def1.getEventTypes(),
+				def1.getAbsPath(), def1.isDeep(), def1.getUuid(), def1
+						.getNodeTypeName(), def1.isNoLocal());
+		oManager.addEventListener(def2.getListener(), def2.getEventTypes(),
+				def2.getAbsPath(), def2.isDeep(), def2.getUuid(), def2
+						.getNodeTypeName(), def2.isNoLocal());
 
 		repoCtrl.replay();
 		sessionCtrl.replay();
@@ -166,7 +167,7 @@ public class JcrSessionFactoryTests extends TestCase {
 		repoCtrl.expectAndReturn(repo.login(null, null), session);
 		sessionCtrl.expectAndReturn(session.getWorkspace(), ws);
 		wsCtrl.expectAndReturn(ws.getNamespaceRegistry(), registry);
-		
+
 		nrCtrl.expectAndReturn(registry.getPrefixes(), new String[0]);
 
 		// destroy
@@ -332,13 +333,15 @@ public class JcrSessionFactoryTests extends TestCase {
 		SessionHolder holder = factory.getSessionHolder(session);
 		assertSame(SessionHolder.class, holder.getClass());
 		// default session holder provider
-		assertSame(SessionHolder.class, factory.getSessionHolder(null).getClass());
+		assertSame(SessionHolder.class, factory.getSessionHolder(null)
+				.getClass());
 	}
 
 	public void testSessionHolder() throws Exception {
 		final String REPO_NAME = "hocus_pocus";
 
-		repoCtrl.expectAndReturn(repo.getDescriptor(Repository.REP_NAME_DESC), REPO_NAME);
+		repoCtrl.expectAndReturn(repo.getDescriptor(Repository.REP_NAME_DESC),
+				REPO_NAME);
 
 		MockControl sessionCtrl = MockControl.createControl(Session.class);
 		Session session = (Session) sessionCtrl.getMock();
@@ -376,7 +379,8 @@ public class JcrSessionFactoryTests extends TestCase {
 
 		Session sess = factory.getSession();
 		assertSame(session, sess);
-		assertSame(CustomSessionHolder.class, factory.getSessionHolder(sess).getClass());
+		assertSame(CustomSessionHolder.class, factory.getSessionHolder(sess)
+				.getClass());
 
 		repoCtrl.verify();
 		sessionCtrl.verify();

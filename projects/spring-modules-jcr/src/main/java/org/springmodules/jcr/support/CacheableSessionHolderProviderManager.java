@@ -17,15 +17,16 @@ import org.springmodules.jcr.SessionHolderProvider;
  * Manager which caches providers in order to avoid lookups.
  * 
  * @author Costin Leau
- *
+ * 
  */
-public abstract class CacheableSessionHolderProviderManager extends AbstractSessionHolderProviderManager {
+public abstract class CacheableSessionHolderProviderManager extends
+		AbstractSessionHolderProviderManager {
 
 	/**
 	 * Caching class based on CachingMapDecorator from main Spring distribution.
 	 * 
 	 * @author Costin Leau
-	 *
+	 * 
 	 */
 	protected class ProvidersCache extends CachingMapDecorator {
 		private ProvidersCache() {

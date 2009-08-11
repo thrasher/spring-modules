@@ -25,10 +25,10 @@ import org.apache.jackrabbit.rmi.server.ServerAdapterFactory;
 import org.springframework.beans.factory.config.AbstractFactoryBean;
 
 /**
- * FactoryBean for creating Jackrabbit RMI remote repository. Use Spring's 
+ * FactoryBean for creating Jackrabbit RMI remote repository. Use Spring's
  * RmiRegistryFactoryBean for retriving/creating a Rmi Registry used for binding
- * the repository.
- * Consider Spring's remoting capabilities when dealing with Serializable objects.
+ * the repository. Consider Spring's remoting capabilities when dealing with
+ * Serializable objects.
  * 
  * @see org.springframework.remoting.rmi.RmiRegistryFactoryBean
  * @author Costin Leau
@@ -44,13 +44,17 @@ public class RmiServerRepositoryFactoryBean extends AbstractFactoryBean {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.springframework.beans.factory.config.AbstractFactoryBean#createInstance()
+	 * @see
+	 * org.springframework.beans.factory.config.AbstractFactoryBean#createInstance
+	 * ()
 	 */
 	protected Object createInstance() throws Exception {
 		if (repository == null)
-			throw new IllegalArgumentException("repository property is required");
+			throw new IllegalArgumentException(
+					"repository property is required");
 		if (remoteAdapterFactory == null)
-			throw new IllegalArgumentException("remoteAdapterFactory property is required");
+			throw new IllegalArgumentException(
+					"remoteAdapterFactory property is required");
 		if (registry == null)
 			throw new IllegalArgumentException("registry property is required");
 		if (rmiName == null)
@@ -69,41 +73,48 @@ public class RmiServerRepositoryFactoryBean extends AbstractFactoryBean {
 	 * @see org.springframework.beans.factory.FactoryBean#getObjectType()
 	 */
 	public Class getObjectType() {
-		return (remoteRepository == null ? RemoteRepository.class : remoteRepository.getClass());
+		return (remoteRepository == null ? RemoteRepository.class
+				: remoteRepository.getClass());
 	}
 
 	/**
-	 * @param registry The registry to set.
+	 * @param registry
+	 *            The registry to set.
 	 */
 	public void setRegistry(Registry registry) {
 		this.registry = registry;
 	}
 
 	/**
-	 * @param remoteRepository The remoteRepository to set.
+	 * @param remoteRepository
+	 *            The remoteRepository to set.
 	 */
 	public void setRemoteRepository(RemoteRepository remoteRepository) {
 		this.remoteRepository = remoteRepository;
 	}
 
 	/**
-	 * @param repository The repository to set.
+	 * @param repository
+	 *            The repository to set.
 	 */
 	public void setRepository(Repository repository) {
 		this.repository = repository;
 	}
 
 	/**
-	 * @param rmiName The rmiName to set.
+	 * @param rmiName
+	 *            The rmiName to set.
 	 */
 	public void setRmiName(String rmiName) {
 		this.rmiName = rmiName;
 	}
 
 	/**
-	 * @param remoteAdapterFactory The remoteAdapterFactory to set.
+	 * @param remoteAdapterFactory
+	 *            The remoteAdapterFactory to set.
 	 */
-	public void setRemoteAdapterFactory(RemoteAdapterFactory remoteAdapterFactory) {
+	public void setRemoteAdapterFactory(
+			RemoteAdapterFactory remoteAdapterFactory) {
 		this.remoteAdapterFactory = remoteAdapterFactory;
 	}
 

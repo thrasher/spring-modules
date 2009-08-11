@@ -43,25 +43,29 @@ public class AcegiTests extends AbstractTransactionalSpringContextTests {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.springframework.test.AbstractTransactionalSpringContextTests#onSetUpBeforeTransaction()
+	 * @seeorg.springframework.test.AbstractTransactionalSpringContextTests#
+	 * onSetUpBeforeTransaction()
 	 */
 	protected void onSetUpBeforeTransaction() throws Exception {
 		SecurityContextHolder.getContext().setAuthentication(
-				new TestingAuthenticationToken(new Object(), new Object(), new GrantedAuthority[] {}));
+				new TestingAuthenticationToken(new Object(), new Object(),
+						new GrantedAuthority[] {}));
 
 	}
 
 	public void testWriteRights() {
 		template.execute(new JcrCallback() {
 
-			public Object doInJcr(Session session) throws IOException, RepositoryException {
+			public Object doInJcr(Session session) throws IOException,
+					RepositoryException {
 				Node rootNode = session.getRootNode();
 				Node one = rootNode.addNode("bla-bla-bla");
 				one.setProperty("some prop", false);
 				Node two = one.addNode("foo");
 				two.setProperty("boo", "hoo");
 				Node three = two.addNode("bar");
-				three.setProperty("whitehorse", new String[] { "super", "ultra", "mega" });
+				three.setProperty("whitehorse", new String[] { "super",
+						"ultra", "mega" });
 				session.save();
 				return null;
 			}

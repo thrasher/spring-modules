@@ -35,7 +35,8 @@ import org.springmodules.jcr.JcrSessionFactory;
  */
 public class JackrabbitSessionFactory extends JcrSessionFactory {
 
-	private static final Log log = LogFactory.getLog(JackrabbitSessionFactory.class);
+	private static final Log log = LogFactory
+			.getLog(JackrabbitSessionFactory.class);
 
 	/**
 	 * Node definitions in CND format.
@@ -46,6 +47,7 @@ public class JackrabbitSessionFactory extends JcrSessionFactory {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.springmodules.jcr.JcrSessionFactory#registerNodeTypes()
 	 */
 	protected void registerNodeTypes() throws Exception {
@@ -56,21 +58,25 @@ public class JackrabbitSessionFactory extends JcrSessionFactory {
 			// Note that it must be cast from the generic JCR NodeTypeManager to
 			// the
 			// Jackrabbit-specific implementation.
-			JackrabbitNodeTypeManager nodeTypeManager = (JackrabbitNodeTypeManager) ws.getNodeTypeManager();
+			JackrabbitNodeTypeManager nodeTypeManager = (JackrabbitNodeTypeManager) ws
+					.getNodeTypeManager();
 
 			boolean debug = log.isDebugEnabled();
 			for (int i = 0; i < nodeDefinitions.length; i++) {
 				Resource resource = nodeDefinitions[i];
 				if (debug)
-					log.debug("adding node type definitions from " + resource.getDescription());
+					log.debug("adding node type definitions from "
+							+ resource.getDescription());
 
-				nodeTypeManager.registerNodeTypes(resource.getInputStream(), contentType);
+				nodeTypeManager.registerNodeTypes(resource.getInputStream(),
+						contentType);
 			}
 		}
 	}
 
 	/**
-	 * @param nodeDefinitions The nodeDefinitions to set.
+	 * @param nodeDefinitions
+	 *            The nodeDefinitions to set.
 	 */
 	public void setNodeDefinitions(Resource[] nodeDefinitions) {
 		this.nodeDefinitions = nodeDefinitions;
@@ -83,7 +89,8 @@ public class JackrabbitSessionFactory extends JcrSessionFactory {
 	 * @see JackrabbitNodeTypeManager#TEXT_X_JCR_CND
 	 * @see JackrabbitNodeTypeManager#TEXT_XML
 	 * 
-	 * @param contentType The contentType to set.
+	 * @param contentType
+	 *            The contentType to set.
 	 */
 	public void setContentType(String contentType) {
 		Assert.hasText(contentType, "contentType is required");

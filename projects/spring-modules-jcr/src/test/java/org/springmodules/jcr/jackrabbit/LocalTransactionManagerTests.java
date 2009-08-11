@@ -53,7 +53,6 @@ public class LocalTransactionManagerTests extends TestCase {
 		 * sessionControl.expectAndReturn(session.getRepository(), repository,
 		 * MockControl.ONE_OR_MORE); final SessionHolderProviderManager
 		 * providerManager = new ListSessionHolderProviderManager();
-		 * 
 		 */
 
 		Xid xidMock = new XidMock();
@@ -76,19 +75,24 @@ public class LocalTransactionManagerTests extends TestCase {
 		TransactionTemplate tt = new TransactionTemplate(tm);
 		final List l = new ArrayList();
 		l.add("test");
-		assertTrue("Hasn't thread session", !TransactionSynchronizationManager.hasResource(sf));
-		assertTrue("JTA synchronizations not active", !TransactionSynchronizationManager.isSynchronizationActive());
+		assertTrue("Hasn't thread session", !TransactionSynchronizationManager
+				.hasResource(sf));
+		assertTrue("JTA synchronizations not active",
+				!TransactionSynchronizationManager.isSynchronizationActive());
 
 		tt.execute(new TransactionCallbackWithoutResult() {
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
-				assertTrue("Has thread session", TransactionSynchronizationManager.hasResource(sf));
+				assertTrue("Has thread session",
+						TransactionSynchronizationManager.hasResource(sf));
 				JcrTemplate template = new JcrTemplate(sf);
 				template.save();
 			}
 		});
 
-		assertTrue("Hasn't thread session", !TransactionSynchronizationManager.hasResource(sf));
-		assertTrue("JTA synchronizations not active", !TransactionSynchronizationManager.isSynchronizationActive());
+		assertTrue("Hasn't thread session", !TransactionSynchronizationManager
+				.hasResource(sf));
+		assertTrue("JTA synchronizations not active",
+				!TransactionSynchronizationManager.isSynchronizationActive());
 
 		sfControl.verify();
 		sessionControl.verify();
@@ -137,16 +141,21 @@ public class LocalTransactionManagerTests extends TestCase {
 		TransactionTemplate tt = new TransactionTemplate(tm);
 		final List l = new ArrayList();
 		l.add("test");
-		assertTrue("Hasn't thread session", !TransactionSynchronizationManager.hasResource(sf));
-		assertTrue("JTA synchronizations not active", !TransactionSynchronizationManager.isSynchronizationActive());
+		assertTrue("Hasn't thread session", !TransactionSynchronizationManager
+				.hasResource(sf));
+		assertTrue("JTA synchronizations not active",
+				!TransactionSynchronizationManager.isSynchronizationActive());
 
 		try {
 			tt.execute(new TransactionCallbackWithoutResult() {
-				protected void doInTransactionWithoutResult(TransactionStatus status) {
-					assertTrue("Has thread session", TransactionSynchronizationManager.hasResource(sf));
+				protected void doInTransactionWithoutResult(
+						TransactionStatus status) {
+					assertTrue("Has thread session",
+							TransactionSynchronizationManager.hasResource(sf));
 					JcrTemplate template = new JcrTemplate(sf);
 					template.execute(new JcrCallback() {
-						public Object doInJcr(Session se) throws RepositoryException {
+						public Object doInJcr(Session se)
+								throws RepositoryException {
 							se.save();
 							throw new RuntimeException();
 						}
@@ -154,13 +163,14 @@ public class LocalTransactionManagerTests extends TestCase {
 					});
 				}
 			});
-		}
-		catch (RuntimeException e) {
+		} catch (RuntimeException e) {
 			// it's okay
 		}
 
-		assertTrue("Hasn't thread session", !TransactionSynchronizationManager.hasResource(sf));
-		assertTrue("JTA synchronizations not active", !TransactionSynchronizationManager.isSynchronizationActive());
+		assertTrue("Hasn't thread session", !TransactionSynchronizationManager
+				.hasResource(sf));
+		assertTrue("JTA synchronizations not active",
+				!TransactionSynchronizationManager.isSynchronizationActive());
 
 		sfControl.verify();
 		sessionControl.verify();
@@ -200,15 +210,19 @@ public class LocalTransactionManagerTests extends TestCase {
 		TransactionTemplate tt = new TransactionTemplate(tm);
 		final List l = new ArrayList();
 		l.add("test");
-		assertTrue("Hasn't thread session", !TransactionSynchronizationManager.hasResource(sf));
-		assertTrue("JTA synchronizations not active", !TransactionSynchronizationManager.isSynchronizationActive());
+		assertTrue("Hasn't thread session", !TransactionSynchronizationManager
+				.hasResource(sf));
+		assertTrue("JTA synchronizations not active",
+				!TransactionSynchronizationManager.isSynchronizationActive());
 
 		tt.execute(new TransactionCallbackWithoutResult() {
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
-				assertTrue("Has thread session", TransactionSynchronizationManager.hasResource(sf));
+				assertTrue("Has thread session",
+						TransactionSynchronizationManager.hasResource(sf));
 				JcrTemplate template = new JcrTemplate(sf);
 				template.execute(new JcrCallback() {
-					public Object doInJcr(Session se) throws RepositoryException {
+					public Object doInJcr(Session se)
+							throws RepositoryException {
 						se.save();
 						return null;
 					}
@@ -218,8 +232,10 @@ public class LocalTransactionManagerTests extends TestCase {
 			}
 		});
 
-		assertTrue("Hasn't thread session", !TransactionSynchronizationManager.hasResource(sf));
-		assertTrue("JTA synchronizations not active", !TransactionSynchronizationManager.isSynchronizationActive());
+		assertTrue("Hasn't thread session", !TransactionSynchronizationManager
+				.hasResource(sf));
+		assertTrue("JTA synchronizations not active",
+				!TransactionSynchronizationManager.isSynchronizationActive());
 
 		sfControl.verify();
 		sessionControl.verify();
@@ -235,17 +251,22 @@ public class LocalTransactionManagerTests extends TestCase {
 		PlatformTransactionManager tm = new LocalTransactionManager(sf);
 		TransactionTemplate tt = new TransactionTemplate(tm);
 
-		assertTrue("Hasn't thread session", !TransactionSynchronizationManager.hasResource(sf));
-		assertTrue("JTA synchronizations not active", !TransactionSynchronizationManager.isSynchronizationActive());
+		assertTrue("Hasn't thread session", !TransactionSynchronizationManager
+				.hasResource(sf));
+		assertTrue("JTA synchronizations not active",
+				!TransactionSynchronizationManager.isSynchronizationActive());
 
 		tt.setIsolationLevel(TransactionDefinition.ISOLATION_SERIALIZABLE);
 		try {
 			tt.execute(new TransactionCallbackWithoutResult() {
-				protected void doInTransactionWithoutResult(TransactionStatus status) {
-					assertTrue("Has thread session", TransactionSynchronizationManager.hasResource(sf));
+				protected void doInTransactionWithoutResult(
+						TransactionStatus status) {
+					assertTrue("Has thread session",
+							TransactionSynchronizationManager.hasResource(sf));
 					JcrTemplate template = new JcrTemplate(sf);
 					template.execute(new JcrCallback() {
-						public Object doInJcr(Session session) throws RepositoryException {
+						public Object doInJcr(Session session)
+								throws RepositoryException {
 							return null;
 						}
 					});
@@ -253,13 +274,14 @@ public class LocalTransactionManagerTests extends TestCase {
 			});
 			fail("Should have thrown InvalidIsolationLevelException");
 
-		}
-		catch (InvalidIsolationLevelException e) {
+		} catch (InvalidIsolationLevelException e) {
 			// it's okay
 		}
 
-		assertTrue("Hasn't thread session", !TransactionSynchronizationManager.hasResource(sf));
-		assertTrue("JTA synchronizations not active", !TransactionSynchronizationManager.isSynchronizationActive());
+		assertTrue("Hasn't thread session", !TransactionSynchronizationManager
+				.hasResource(sf));
+		assertTrue("JTA synchronizations not active",
+				!TransactionSynchronizationManager.isSynchronizationActive());
 
 		sfControl.verify();
 	}
@@ -286,19 +308,23 @@ public class LocalTransactionManagerTests extends TestCase {
 		UserTxSessionHolder uTx = new UserTxSessionHolder(session);
 		TransactionSynchronizationManager.bindResource(sf, uTx);
 
-		assertTrue("Has thread session", TransactionSynchronizationManager.hasResource(sf));
+		assertTrue("Has thread session", TransactionSynchronizationManager
+				.hasResource(sf));
 
 		tt.execute(new TransactionCallbackWithoutResult() {
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
-				assertTrue("Has thread session", TransactionSynchronizationManager.hasResource(sf));
+				assertTrue("Has thread session",
+						TransactionSynchronizationManager.hasResource(sf));
 				JcrTemplate template = new JcrTemplate(sf);
 				template.save();
 			}
 		});
 
-		assertTrue("Has thread session", TransactionSynchronizationManager.hasResource(sf));
+		assertTrue("Has thread session", TransactionSynchronizationManager
+				.hasResource(sf));
 		TransactionSynchronizationManager.unbindResource(sf);
-		assertTrue("JTA synchronizations not active", !TransactionSynchronizationManager.isSynchronizationActive());
+		assertTrue("JTA synchronizations not active",
+				!TransactionSynchronizationManager.isSynchronizationActive());
 
 		sfControl.verify();
 		sessionControl.verify();
@@ -326,26 +352,30 @@ public class LocalTransactionManagerTests extends TestCase {
 		UserTxSessionHolder uTx = new UserTxSessionHolder(session);
 		TransactionSynchronizationManager.bindResource(sf, uTx);
 
-		assertTrue("Has thread session", TransactionSynchronizationManager.hasResource(sf));
+		assertTrue("Has thread session", TransactionSynchronizationManager
+				.hasResource(sf));
 		uTx.setRollbackOnly();
 
 		try {
 			tt.execute(new TransactionCallbackWithoutResult() {
-				protected void doInTransactionWithoutResult(TransactionStatus status) {
-					assertTrue("Has thread session", TransactionSynchronizationManager.hasResource(sf));
+				protected void doInTransactionWithoutResult(
+						TransactionStatus status) {
+					assertTrue("Has thread session",
+							TransactionSynchronizationManager.hasResource(sf));
 					JcrTemplate template = new JcrTemplate(sf);
 					template.save();
 				}
 			});
 
-		}
-		catch (UnexpectedRollbackException e) {
+		} catch (UnexpectedRollbackException e) {
 			System.out.println(e);
 		}
 
-		assertTrue("Has thread session", TransactionSynchronizationManager.hasResource(sf));
+		assertTrue("Has thread session", TransactionSynchronizationManager
+				.hasResource(sf));
 		TransactionSynchronizationManager.unbindResource(sf);
-		assertTrue("JTA synchronizations not active", !TransactionSynchronizationManager.isSynchronizationActive());
+		assertTrue("JTA synchronizations not active",
+				!TransactionSynchronizationManager.isSynchronizationActive());
 
 		sfControl.verify();
 		sessionControl.verify();

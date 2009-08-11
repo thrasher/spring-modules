@@ -2,14 +2,13 @@ package org.springmodules.jcr;
 
 import java.io.InputStream;
 
-
 /**
- * Interface used for delimiting Jcr operations based on what the underlying repository supports (in this
- * case model 2 operations).
- * Normally not used but useful for casting to restrict access in some situations. 
+ * Interface used for delimiting Jcr operations based on what the underlying
+ * repository supports (in this case model 2 operations). Normally not used but
+ * useful for casting to restrict access in some situations.
  * 
  * @author Costin Leau
- *
+ * 
  */
 public interface JcrModel2Operations extends JcrModel1Operations {
 

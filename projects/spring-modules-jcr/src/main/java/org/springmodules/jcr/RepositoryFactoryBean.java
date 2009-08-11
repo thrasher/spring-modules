@@ -16,13 +16,14 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.io.Resource;
 
 /**
- * Base class with common functionality for creating JCR repositories. Subclasses should extend
- * this class for custom configuration. 
+ * Base class with common functionality for creating JCR repositories.
+ * Subclasses should extend this class for custom configuration.
  * 
  * @author Costin Leau
- *
+ * 
  */
-public abstract class RepositoryFactoryBean implements InitializingBean, DisposableBean, FactoryBean {
+public abstract class RepositoryFactoryBean implements InitializingBean,
+		DisposableBean, FactoryBean {
 
 	protected final Log log = LogFactory.getLog(getClass());
 
@@ -37,13 +38,15 @@ public abstract class RepositoryFactoryBean implements InitializingBean, Disposa
 	protected Repository repository;
 
 	/**
-	 * Subclasses have to implement this method to allow specific JSR-170 implementation repository configuration.
-	 *
+	 * Subclasses have to implement this method to allow specific JSR-170
+	 * implementation repository configuration.
+	 * 
 	 */
 	protected abstract void resolveConfigurationResource() throws Exception;
 
 	/**
-	 * Subclasses have to implement this method to allow specific JSR-170 implementation repository creation.
+	 * Subclasses have to implement this method to allow specific JSR-170
+	 * implementation repository creation.
 	 * 
 	 * @return
 	 */
@@ -94,7 +97,8 @@ public abstract class RepositoryFactoryBean implements InitializingBean, Disposa
 	}
 
 	/**
-	 * @param configuration The configuration to set.
+	 * @param configuration
+	 *            The configuration to set.
 	 */
 	public void setConfiguration(Resource configuration) {
 		this.configuration = configuration;

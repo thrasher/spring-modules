@@ -30,43 +30,54 @@ public class JackrabbitNamespaceHandlerTests extends TestCase {
 	private XmlBeanFactory beanFactory;
 
 	protected void setUp() throws Exception {
-		this.beanFactory = new XmlBeanFactory(new ClassPathResource(
-				"/org/springmodules/jcr/jackrabbit/config/jackrabbitNamespaceHandlerTests.xml", getClass()));
+		this.beanFactory = new XmlBeanFactory(
+				new ClassPathResource(
+						"/org/springmodules/jcr/jackrabbit/config/jackrabbitNamespaceHandlerTests.xml",
+						getClass()));
 	}
 
-	private void assertPropertyValue(RootBeanDefinition beanDefinition, String propertyName, Object expectedValue) {
-		assertEquals("Property [" + propertyName + "] incorrect.", expectedValue,
-				beanDefinition.getPropertyValues().getPropertyValue(propertyName).getValue());
+	private void assertPropertyValue(RootBeanDefinition beanDefinition,
+			String propertyName, Object expectedValue) {
+		assertEquals("Property [" + propertyName + "] incorrect.",
+				expectedValue, beanDefinition.getPropertyValues()
+						.getPropertyValue(propertyName).getValue());
 	}
 
 	protected void tearDown() throws Exception {
 		super.tearDown();
 	}
-	
+
 	public void testMinimalDefinition() throws Exception {
-		RootBeanDefinition beanDefinition = (RootBeanDefinition) this.beanFactory.getBeanDefinition("minimal");
+		RootBeanDefinition beanDefinition = (RootBeanDefinition) this.beanFactory
+				.getBeanDefinition("minimal");
 		assertSame(RepositoryFactoryBean.class, beanDefinition.getBeanClass());
-		assertPropertyValue(beanDefinition, "configuration", "classpath:config.xml");
+		assertPropertyValue(beanDefinition, "configuration",
+				"classpath:config.xml");
 	}
 
 	public void testExtendedDefinition() throws Exception {
-		RootBeanDefinition beanDefinition = (RootBeanDefinition) this.beanFactory.getBeanDefinition("extended");
+		RootBeanDefinition beanDefinition = (RootBeanDefinition) this.beanFactory
+				.getBeanDefinition("extended");
 		assertSame(RepositoryFactoryBean.class, (beanDefinition.getBeanClass()));
 		assertPropertyValue(beanDefinition, "configuration", "file:config.xml");
 		assertPropertyValue(beanDefinition, "homeDir", "file:///homeDir");
 	}
 
 	public void testFullDefinition() throws Exception {
-		RootBeanDefinition beanDefinition = (RootBeanDefinition) this.beanFactory.getBeanDefinition("full");
+		RootBeanDefinition beanDefinition = (RootBeanDefinition) this.beanFactory
+				.getBeanDefinition("full");
 		assertSame(RepositoryFactoryBean.class, (beanDefinition.getBeanClass()));
 		assertPropertyValue(beanDefinition, "homeDir", "file:///homeDir");
 		assertPropertyValue(beanDefinition, "repositoryConfig", "repoCfg");
 	}
-	
+
 	public void testTransactionManager() throws Exception {
-		RootBeanDefinition beanDefinition = (RootBeanDefinition) this.beanFactory.getBeanDefinition("transactionManager");
-		assertSame(LocalTransactionManager.class, (beanDefinition.getBeanClass()));
-		assertPropertyValue(beanDefinition, "sessionFactory", "jcrSessionFactory");
+		RootBeanDefinition beanDefinition = (RootBeanDefinition) this.beanFactory
+				.getBeanDefinition("transactionManager");
+		assertSame(LocalTransactionManager.class, (beanDefinition
+				.getBeanClass()));
+		assertPropertyValue(beanDefinition, "sessionFactory",
+				"jcrSessionFactory");
 	}
 
 }

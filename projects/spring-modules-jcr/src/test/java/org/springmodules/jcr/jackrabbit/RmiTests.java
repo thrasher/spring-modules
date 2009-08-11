@@ -30,8 +30,10 @@ public class RmiTests extends AbstractTransactionalSpringContextTests {
 	}
 
 	public void testSetup() throws Exception {
-		Repository repository = (Repository) applicationContext.getBean("rmiClient");
-		assertEquals("Jackrabbit", repository.getDescriptor("jcr.repository.name"));
+		Repository repository = (Repository) applicationContext
+				.getBean("rmiClient");
+		assertEquals("Jackrabbit", repository
+				.getDescriptor("jcr.repository.name"));
 	}
 
 }
