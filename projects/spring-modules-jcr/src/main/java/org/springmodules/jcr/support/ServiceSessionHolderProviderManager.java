@@ -13,9 +13,6 @@ import java.util.List;
 
 import org.springmodules.jcr.SessionHolderProvider;
 
-import sun.misc.Service;
-import sun.misc.ServiceConfigurationError;
-
 /**
  * Implementation of SessionHolderProviderManager which does dynamic discovery
  * of the providers using the JDK 1.3+ <a href=
@@ -37,16 +34,10 @@ public class ServiceSessionHolderProviderManager extends
 	 * @return the list of service providers found.
 	 */
 	public List getProviders() {
-		Iterator i = Service.providers(SessionHolderProvider.class, Thread
-				.currentThread().getContextClassLoader());
+		Iterator i = Service.providers(SessionHolderProvider.class, true);
 		List providers = new ArrayList();
 		for (; i.hasNext();) {
-			try {
-				providers.add(i.next());
-			} catch (ServiceConfigurationError sce) {
-				if (!(sce.getCause() instanceof SecurityException))
-					throw sce;
-			}
+			providers.add(i.next());
 		}
 		return Collections.unmodifiableList(providers);
 	}
