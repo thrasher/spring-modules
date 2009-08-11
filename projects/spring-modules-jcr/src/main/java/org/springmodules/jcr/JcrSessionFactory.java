@@ -19,7 +19,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 import org.springmodules.jcr.support.GenericSessionHolderProvider;
 
 /**
@@ -131,8 +130,8 @@ public class JcrSessionFactory implements InitializingBean, DisposableBean,
 							+ getRepositoryInfo()
 							+ " does NOT support Observation; remove Listener definitions");
 
-		registerNodeTypes();
 		registerNamespaces();
+		registerNodeTypes();
 
 		// determine the session holder provider
 		if (sessionHolderProviderManager == null) {
@@ -181,7 +180,8 @@ public class JcrSessionFactory implements InitializingBean, DisposableBean,
 		if (log.isDebugEnabled())
 			log.debug("registering custom namespaces " + namespaces);
 
-		NamespaceRegistry registry = getSession().getWorkspace()
+		Session session = getSession();
+		NamespaceRegistry registry = session.getWorkspace()
 				.getNamespaceRegistry();
 
 		// do the lookup, so we avoid exceptions
@@ -233,6 +233,8 @@ public class JcrSessionFactory implements InitializingBean, DisposableBean,
 				registry.registerNamespace(prefix, ns);
 			}
 		}
+
+		session.logout();
 	}
 
 	/**
